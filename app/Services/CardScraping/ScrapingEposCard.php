@@ -56,7 +56,7 @@ class ScrapingEposCard extends ScrapingCard
         ];
     }
 
-    public function getPaymentPage()
+    private function getPaymentPage()
     {
         $client = new Client();
         $loginPage = $client->request('GET', 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp');
@@ -68,7 +68,7 @@ class ScrapingEposCard extends ScrapingCard
         return $client->request('GET', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do');
     }
 
-    public function getPaymentCSV()
+    private function getPaymentCSV()
     {
         $paymentDetailPage = $client->request('POST', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_dispatch.do', $btnValueList);
         $csvDownloadButton = $paymentDetailPage->filter('input[name=csvDownloadButton]')->attr('value');
@@ -87,7 +87,7 @@ class ScrapingEposCard extends ScrapingCard
         return $csvList;
     }
 
-    public function convertToCardLogs(): CardLogs
+    private function convertToCardLogs(): CardLogs
     {
         $cardLogs = new CardLogs;
         foreach ($csvList as $csv) {
