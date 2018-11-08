@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructures\Repositories\CardLog;
+namespace App\Infrastructures\Repositories\Domains\CardLog;
 
 use App\Infrastructures\Eloquents\EloquentCardLog;
 

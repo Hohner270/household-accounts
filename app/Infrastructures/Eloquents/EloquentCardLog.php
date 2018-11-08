@@ -25,23 +25,23 @@ class EloquentCardLog extends Model
     public function toDomains(Collection $records): CardLogs
     {
         return $records->reduce(function ($cardLogs, $record) {
-            $cardLogs->add($this->toDomain($record));
+            $cardLogs->add($record->toDomain());
             return $cardLogs;
         }, new CardLogs);
     }
 
-    public function toDomain(self $record): CardLog
+    public function toDomain(): CardLog
     {
         return new CardLog(
-            new CardLogId($record->id),
-            new CardId($record->card_id),
-            new StoreName($record->store_name),
-            new UsedDate($record->used_date),
-            new UsedPlace($record->used_place),
-            new UsedContent($record->used_content),
-            new UsedPrice($record->used_price),
-            new Payment($record->payment),
-            new PaymentTimes($record->payment_times)
+            new CardLogId($this->id),
+            new CardId($this->card_id),
+            new StoreName($this->store_name),
+            new UsedDate($this->used_date),
+            new UsedPlace($this->used_place),
+            new UsedContent($this->used_content),
+            new UsedPrice($this->used_price),
+            new Payment($this->payment),
+            new PaymentTimes($this->payment_times)
         );
     }
 }

@@ -34,17 +34,29 @@ class ScrapingEposCard extends ScrapingCard
     }
 
     public function __invoke()
-    {
-        
+    {   
+        $client = new Client();
+
         $btn = 'thisButton';
 
-        $paymentPage = $this->getPaymentPage();
+        $paymentPage = $this->getPaymentPage($client);
         $btnValueList = $this->getBtnValueList($paymentPage, $btn);
 
-        $csvList = $this->getPaymentCSV();
+        $csvList = $this->getPaymentCSV($client);
         $cardLogs = convertToCardLogs($csvList);
 
-        $this->cardLogRepo->registerCardLogs($cardLogs);
+        $this->cardLogRepo->store($cardLogs);
+    }
+
+    private function getPaymentPage($client)
+    {
+        $loginPage = $client->request('GET', 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp');
+        $loginForm = $loginPage->filter('form[name=loginForm]')->form();
+        // $loginForm['loginId'] = 'aaaa';
+        // $loginForm['passWord'] = 'aaaa';
+        $client->submit($loginForm);
+
+        return $client->request('GET', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do');
     }
 
     private function getBtnValueList($paymentPage, $targetBtn): array
@@ -56,19 +68,7 @@ class ScrapingEposCard extends ScrapingCard
         ];
     }
 
-    private function getPaymentPage()
-    {
-        $client = new Client();
-        $loginPage = $client->request('GET', 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp');
-        $loginForm = $loginPage->filter('form[name=loginForm]')->form();
-        $loginForm['loginId'] = 'aaaa';
-        $loginForm['passWord'] = 'aaaa';
-        $client->submit($loginForm);
-
-        return $client->request('GET', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do');
-    }
-
-    private function getPaymentCSV()
+    private function getPaymentCSV($client): array
     {
         $paymentDetailPage = $client->request('POST', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_dispatch.do', $btnValueList);
         $csvDownloadButton = $paymentDetailPage->filter('input[name=csvDownloadButton]')->attr('value');
@@ -87,7 +87,7 @@ class ScrapingEposCard extends ScrapingCard
         return $csvList;
     }
 
-    private function convertToCardLogs(): CardLogs
+    private function convertToCardLogs(array $csvList): CardLogs
     {
         $cardLogs = new CardLogs;
         foreach ($csvList as $csv) {

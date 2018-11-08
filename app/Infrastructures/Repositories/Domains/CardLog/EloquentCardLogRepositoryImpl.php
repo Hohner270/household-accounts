@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructures\Repositories\CardLog;
+namespace App\Infrastructures\Repositories\Domains\CardLog;
 
 use App\Infrastructures\Eloquents\EloquentCardLog;
 use App\Domains\CardLog\CardLogRepository;
@@ -15,12 +15,7 @@ class EloquentCardLogRepositoryImpl implements CardLogRepository
         $this->eloquent = $eloquent;
     }
 
-    public function register()
-    {
-        return;
-    }
-
-    public function registerCardLogs(CardLogs $cardLogs)
+    public function store(CardLogs $cardLogs)
     {
         $cardLogCollection = $cardLogs->collect();
 
@@ -40,10 +35,5 @@ class EloquentCardLogRepositoryImpl implements CardLogRepository
         }
 
         $this->eloquent->insert($records);
-    }
-
-    public function update()
-    {
-        return;
     }
 }

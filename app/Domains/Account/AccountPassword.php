@@ -2,6 +2,8 @@
 
 namespace App\Domains\Account;
 
+use App\Exceptions\InitializeException;
+
 class AccountPassword
 {
     private $password;

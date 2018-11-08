@@ -16,7 +16,7 @@ class AuthController extends Controller
         return view('auth.sign_in');
     }
 
-    public function signInCheck(SignInRequest $request, SignIn $signIn)
+    public function check(SignInRequest $request, SignIn $signIn)
     {
         $accountName = $request->accunt_name;
         $password = $request->password;

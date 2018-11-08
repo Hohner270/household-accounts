@@ -16,13 +16,13 @@
 // });
 
 // Route::middleware(['guest'])->group(function () {
-    Route::get('/signIn', 'AuthController@signIn');
-    Route::post('/signIn', 'AuthController@signInCheck');
+Route::get('/signIn', 'AuthController@signIn');
+Route::post('/signIn', 'AuthController@check');
 
-    Route::get('/signUp', 'UsersController@create');
-    Route::post('/signUp', 'UsersController@store');
+Route::get('/signUp', 'UsersController@create');
+Route::post('/signUp', 'UsersController@store');
 // });
 
 // Route::middleware(['auth'])->group(function () {
-    Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index');
 // });

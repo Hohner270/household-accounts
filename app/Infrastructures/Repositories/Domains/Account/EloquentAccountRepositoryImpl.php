@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructures\Repositories\Account;
+namespace App\Infrastructures\Repositories\Domains\Account;
 
 use App\Infrastructures\Eloquents\EloquentAccount;
 
@@ -27,7 +27,7 @@ class EloquentAccountRepositoryImpl implements AccountRepository
      * @return Account アカウントドメイン
      * 
      * */ 
-    public function register(AccountName $accountName, EmailAddress $emailAddress, AccountPassword $accountPassword): Account
+    public function store(AccountName $accountName, EmailAddress $emailAddress, AccountPassword $accountPassword): Account
     {
         $this->eloquentAccount->name = $accountName->accountName();
         $this->eloquentAccount->email = $emailAddress->address();

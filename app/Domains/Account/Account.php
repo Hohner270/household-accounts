@@ -34,9 +34,4 @@ class Account
     {
         return $this->accountName;
     }
-
-    public function isSamePassword()
-    {
-        
-    }
 }

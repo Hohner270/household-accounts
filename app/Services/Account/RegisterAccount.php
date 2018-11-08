@@ -9,14 +9,17 @@ use App\Domains\Account\AccountName;
 use App\Domains\Email\EmailAddress;
 use App\Domains\Account\AccountPassword;
 use App\Domains\Account\AccountRepository;
+use App\Domains\Account\SessionAccountRepository;
 
 class RegisterAccount
 {
     private $accountRepo;
+    private $sessionRepo;
 
-    public function __construct(AccountRepository $accountRepo)
+    public function __construct(AccountRepository $accountRepo, SessionAccountRepository $sessionRepo)
     {
         $this->accountRepo = $accountRepo;
+        $this->sessionRepo = $sessionRepo;
     }
 
     /**
@@ -29,10 +32,14 @@ class RegisterAccount
      * */ 
     public function __invoke(string $accountName, string $email, string $password): Account
     {
-        return $this->accountRepo->register(
+        $account = $this->accountRepo->store(
             new AccountName($accountName),
             new EmailAddress($email),
             new AccountPassword($password)
         );
+
+        $this->sessionRepo->store($account);
+
+        return $account;
     }
 }

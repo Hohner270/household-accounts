@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructures\Repositories\Card;
+namespace App\Infrastructures\Repositories\Domains\Card;
 
 use App\Domains\Card\Card;
 use App\Domains\Card\CardId;
