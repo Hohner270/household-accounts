@@ -6,14 +6,17 @@ use Closure;
 
 use App\Domains\Account\SessionAccountRepository;
 
-class AuthCheck
+use App\Exceptions\NotFoundException;
+
+class RedirectFromAuthenticatePage
 {
     private $sessionRepo;
 
-    public function __construct(SessionAccountRepository $Repo)
+    public function __construct(SessionAccountRepository $sessionRepo)
     {
         $this->sessionRepo = $sessionRepo;
     }
+    
     /**
      * Handle an incoming request.
      *
@@ -23,7 +26,13 @@ class AuthCheck
      */
     public function handle($request, Closure $next)
     {
-        if (! empty($this->sessionRepo->find())) return redirect('/signIn');
-        return $next($request);
+        try {
+            $account = $this->sessionRepo->find();
+        } catch (NotFoundException $e) {
+            return $next($request);
+        }
+
+        return redirect('/');
+
     }
 }

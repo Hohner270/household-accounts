@@ -3,10 +3,20 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
+
+use App\Domains\Account\SessionAccountRepository;
+
+use App\Exceptions\NotFoundException;
 
 class RedirectIfAuthenticated
 {
+    private $sessionRepo;
+
+    public function __construct(SessionAccountRepository $sessionRepo)
+    {
+        $this->sessionRepo = $sessionRepo;
+    }
+
     /**
      * Handle an incoming request.
      *
@@ -17,9 +27,14 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+        try {
+            $account = $this->sessionRepo->find();
+        } catch (NotFoundException $e) {
+            return redirect('/signIn');
         }
+
+        // ここで変数にユーザーを入れてもいいのか？ リクエストの中に入れちゃう？
+        $request->account = $account;
 
         return $next($request);
     }

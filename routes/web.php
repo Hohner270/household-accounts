@@ -11,18 +11,14 @@
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::middleware(['guest'])->group(function () {
+    Route::get('/signIn', 'SignInController@signIn');
+    Route::post('/signIn', 'SignInController@check');
 
-// Route::middleware(['guest'])->group(function () {
-Route::get('/signIn', 'AuthController@signIn');
-Route::post('/signIn', 'AuthController@check');
+    Route::get('/signUp', 'UsersController@create');
+    Route::post('/signUp', 'UsersController@store');
+});
 
-Route::get('/signUp', 'UsersController@create');
-Route::post('/signUp', 'UsersController@store');
-// });
-
-// Route::middleware(['auth'])->group(function () {
-Route::get('/', 'HomeController@index');
-// });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', 'HomeController@index');
+});

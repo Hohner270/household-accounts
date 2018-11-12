@@ -23,8 +23,9 @@ class HttpSessionAccountRepositoryImpl implements SessionAccountRepository
     {
         $account = $this->session->get(self::SESSION_KEY);
         if (empty($account)) {
-            throw new NotFoundException;
+            throw new NotFoundException('not signin');
         }
+        
         return $account;
     }
 

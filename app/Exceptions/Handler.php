@@ -13,7 +13,8 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        //
+        \App\Exceptions\InitializeException::class,
+        \App\Exceptions\NotFoundException::class
     ];
 
     /**

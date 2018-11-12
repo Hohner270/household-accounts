@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Services\Auth\SignIn;
 
-class AuthController extends Controller
+class SignInController extends Controller
 {
     public function signIn()
     {
