@@ -9,4 +9,5 @@ use App\Domains\Account\AccountPassword;
 interface AccountRepository
 {
     public function store(AccountName $accountName, EmailAddress $emailAddress, AccountPassword $accountPassword);
+    public function findByEmail(EmailAddress $email);
 }

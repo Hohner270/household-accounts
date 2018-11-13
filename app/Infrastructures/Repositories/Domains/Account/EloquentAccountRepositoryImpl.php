@@ -36,4 +36,13 @@ class EloquentAccountRepositoryImpl implements AccountRepository
 
         return $this->eloquentAccount->toDomain();
     }
+    /** 
+     * @param EmailAddress アドレス
+     * @return Account アカウントドメイン
+     */
+    public function findByEmail(EmailAddress $email): Account
+    {
+        $account = $this->eloquentAccount->where('email', $email);
+        return $account;
+    }
 }
