@@ -1,28 +1,34 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Auth;
 
-use App\Domains\Account\AccountRepository;
+use App\Domains\Account\AccountFindRepository;
 use App\Domains\Account\SessionAccountRepository;
-
+use App\Domains\Account\Account;
+use App\Domains\Account\AccountPassword;
 use App\Domains\Email\EmailAddress;
 
 class SignIn
 {
-    private $accountRepo;
+    private $accountFindRepo;
     private $sessionRepo;
     
-    public function __construct(AccountRepository $accountRepo, SessionAccountRepository $sessionRepo)
+    public function __construct(AccountFindRepository $accountFindRepo, SessionAccountRepository $sessionRepo)
     {
-        $this->accountRepo = $accountRepo;
+        $this->accountFindRepo = $accountFindRepo;
         $this->sessionRepo = $sessionRepo;
     }
 
-    public function __invoke(EmailAddress $email)
+    public function __invoke(string $email, string $password): ?Account
     {
-        $account = $this->accountRepo->findByEmail($email);
-        $this->sessionRepo->store($account);
+        $account = $this->accountFindRepo->findByEmail(new EmailAddress($email));
         
+        $password = new AccountPassword($password);
+        if (! $account->password()->isSamePassword($password)) {
+            return null;
+        }
+
+        $this->sessionRepo->store($account);
         return $account;
     }
 }

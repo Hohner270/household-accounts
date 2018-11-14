@@ -17,13 +17,8 @@ class EmailAddress
         $this->address = $address;
     }
 
-    public function address(): string
+    public function value(): string
     {
         return $this->address;
-    }
-
-    public static function of(string $address): self
-    {
-        return new static($address);
     }
 }

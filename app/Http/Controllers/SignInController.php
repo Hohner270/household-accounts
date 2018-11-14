@@ -18,10 +18,14 @@ class SignInController extends Controller
 
     public function check(SignInRequest $request, SignIn $signIn)
     {
-        $accountName = $request->accunt_name;
+        $email = $request->email;
         $password = $request->password;
 
-        $signIn($accountName, $password);
+        $account = $signIn($email, $password);
+
+        if (! $account) {
+            return redirect('/signIn')->with('accountNotFound', 'emailアドレスかパスワードが間違っています');
+        }
 
         return redirect('/');
     }

@@ -15,7 +15,7 @@ class AccountSpec
 
     public static function canAccountName(string $accountName): bool
     {
-        return preg_match('/^[ぁ-んァ-ンーa-zA-Z一-龠々]+$/u', $accountName) > 0;
+        return preg_match('/^[ぁ-んァ-ンーa-zA-Z一-龠々0-9]+$/u', $accountName) > 0;
     }
 
     public static function canAccountNameLength(string $accountName): bool

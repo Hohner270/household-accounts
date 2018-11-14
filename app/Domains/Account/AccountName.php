@@ -17,13 +17,8 @@ class AccountName
         $this->accountName = $accountName;
     }
 
-    public function accountName(): string
+    public function value(): string
     {
         return $this->accountName;
-    }
-
-    public static function of(string $accountName): self
-    {
-        return new static($accountName);
     }
 }

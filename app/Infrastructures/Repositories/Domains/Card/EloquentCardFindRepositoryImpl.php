@@ -3,6 +3,7 @@
 namespace App\Infrastructures\Repositories\Domains\Card;
 
 use App\Domains\Card\Card;
+use App\Domains\Card\Cards;
 use App\Domains\Card\CardId;
 use App\Domains\Card\CardFindRepository;
 
@@ -21,5 +22,12 @@ class EloquentCardFindRepositoryImpl implements CardFindRepository
     {
         $card = $this->eloquent->find($cardId->value());
         return $this->eloquent->toDomain($card);
+    }
+
+    public function findAll(): Cards
+    {
+        $records = $this->eloquent->all();
+        $cards = $this->eloquent->toDomains($records);
+        return $cards;
     }
 }

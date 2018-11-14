@@ -16,7 +16,7 @@ class Card
         $this->cardName = $cardName;
     }
 
-    public function id(): AccountId
+    public function id(): CardId
     {
         return $this->id;
     }

@@ -7,7 +7,7 @@ use App\Infrastructures\Eloquents\EloquentAccount;
 use App\Domains\Account\Account;
 use App\Domains\Account\AccountName;
 use App\Domains\Email\EmailAddress;
-use App\Domains\Account\AccountPassword;
+use App\Domains\Account\AccountHashedPassword;
 use App\Domains\Account\AccountRepository;
 
 class EloquentAccountRepositoryImpl implements AccountRepository
@@ -27,11 +27,11 @@ class EloquentAccountRepositoryImpl implements AccountRepository
      * @return Account アカウントドメイン
      * 
      * */ 
-    public function store(AccountName $accountName, EmailAddress $emailAddress, AccountPassword $accountPassword): Account
+    public function store(AccountName $accountName, EmailAddress $emailAddress, AccountHashedPassword $accountHashedPassword): Account
     {
-        $this->eloquentAccount->name = $accountName->accountName();
-        $this->eloquentAccount->email = $emailAddress->address();
-        $this->eloquentAccount->password = $accountPassword->password();
+        $this->eloquentAccount->name = $accountName->value();
+        $this->eloquentAccount->email = $emailAddress->value();
+        $this->eloquentAccount->password = $accountHashedPassword->value();
         $this->eloquentAccount->save();
 
         return $this->eloquentAccount->toDomain();

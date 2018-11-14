@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Domains\Account\AccountId;
 use App\Domains\Account\AccountName;
 use App\Domains\Email\EmailAddress;
+use App\Domains\Account\AccountHashedPassword;
 
 use App\Domains\Account\Account;
 
@@ -43,7 +44,8 @@ class EloquentAccount extends Authenticatable
         return new Account(
             new AccountId($this->id),
             new AccountName($this->name),
-            new EmailAddress($this->email)
+            new EmailAddress($this->email),
+            new AccountHashedPassword($this->password)
         );
     }
 }

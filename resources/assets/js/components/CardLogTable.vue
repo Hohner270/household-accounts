@@ -1,0 +1,27 @@
+<template>
+    <section>
+        <h2>CardLog</h2>
+        <thead>
+            <tr>								
+                <td>種別（ショッピング、キャッシング、その他）</td>
+                <td>ご利用年月日</td>
+                <td>ご利用場所</td>
+                <td>ご利用内容</td>
+                <td>ご利用金額</td>
+                <td>お支払金額（キャッシングでは利息を含みます）</td>
+                <td>支払区分</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tbody>
+    </section>
+</template>

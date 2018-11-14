@@ -32,10 +32,12 @@ class RegisterAccount
      * */ 
     public function __invoke(string $accountName, string $email, string $password): Account
     {
+        $password = new AccountPassword($password);
+        
         $account = $this->accountRepo->store(
             new AccountName($accountName),
             new EmailAddress($email),
-            new AccountPassword($password)
+            $password->passwordToHash()
         );
 
         $this->sessionRepo->store($account);

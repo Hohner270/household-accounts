@@ -2,7 +2,7 @@
 
 namespace App\Exceptions;
 
-class InitializeException extends Exceptions
+class InitializeException extends \Exception
 {
 
 }
