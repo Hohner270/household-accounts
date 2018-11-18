@@ -5,8 +5,8 @@ namespace App\Domains\Account;
 use App\Domains\Account\AccountId;
 use App\Domains\Email\EmailAddress;
 use App\Domains\Account\AccoutName;
+use App\Domains\Account\AccountPassword;
 use App\Domains\Account\AccoutHashedPassword;
-use App\Domains\Account\AccountAlias;
 
 class Account
 {
@@ -41,5 +41,10 @@ class Account
     public function password(): AccountHashedPassword
     {
         return $this->password;
+    }
+
+    public function isSamePassword(AccountPassword $password): bool
+    {
+        return password_verify($password->value(), $this->password()->value());
     }
 }

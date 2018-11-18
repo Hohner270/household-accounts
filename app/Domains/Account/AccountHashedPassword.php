@@ -4,8 +4,6 @@ namespace App\Domains\Account;
 
 use App\Exceptions\InitializeException;
 
-use App\Domains\Account\AccountPassword;
-
 class AccountHashedPassword
 {
     private $hashedPassword;
@@ -19,10 +17,5 @@ class AccountHashedPassword
     public function value(): string
     {
         return $this->hashedPassword;
-    }
-
-    public function isSamePassword(AccountPassword $password)
-    {
-        return password_verify($password->value(), $this->hashedPassword);
     }
 }

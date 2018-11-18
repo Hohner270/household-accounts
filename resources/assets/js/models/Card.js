@@ -1,4 +1,4 @@
-const BaseURL = '/';
+const BaseURL = '/cards';
 
 module.exports = new vue({
     data: {

@@ -17,8 +17,8 @@ class CreateUserCardsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('card_id')->unsigned();
-            $table->string('card_service_id');
-            $table->string('card_service_password');
+            $table->string('card_sign_in_id');
+            $table->string('card_sign_in_password');
             $table->timestamps();
         });
     }

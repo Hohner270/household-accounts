@@ -24,7 +24,7 @@ class SignIn
         $account = $this->accountFindRepo->findByEmail(new EmailAddress($email));
         
         $password = new AccountPassword($password);
-        if (! $account->password()->isSamePassword($password)) {
+        if (! $account->isSamePassword($password)) {
             return null;
         }
 

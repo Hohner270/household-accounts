@@ -2,6 +2,6 @@
 
 namespace App\Services\CardScraping;
 
-abstract class ScrapingCard
+interface ScrapeCard
 {
 }

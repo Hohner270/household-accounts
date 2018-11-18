@@ -8,6 +8,5 @@ class CardLogSpec
 {
     public function canCardType(int $cardType): bool
     {
-        \App::make(CardFindRepository::class);
     }
 }

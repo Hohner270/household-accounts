@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Services\CardScraping;
+namespace App\Services\CardScraping\EposCard;
 
 use Goutte\Client;
 
-use App\Services\CardScraping\ScrapingCard;
+use App\Services\CardScraping\ScrapeCard;
 
 use App\Domains\CardLog\CardLogs;
 use App\Domains\CardLog\CardLogId;
@@ -20,46 +20,31 @@ use App\Domains\CardLog\CardLogRepository;
 
 use App\Domains\Card\CardId;
 
-class ScrapingEposCard extends ScrapingCard
+abstract class ScrapeEposCard implements ScrapeCard
 {
-    // ドメインに持たせる
     const EPOS_CARD_ID = 1;
 
-    private $cardLogRepo;
-    private $card;
+    protected $cardLogRepo;
 
     public function __construct(CardLogRepository $cardLogRepo)
     {
         $this->cardLogRepo = $cardLogRepo;
     }
 
-    public function __invoke()
-    {   
-        $client = new Client();
-
-        $btn = 'thisButton';
-
-        $paymentPage = $this->getPaymentPage($client);
-        $btnValueList = $this->getBtnValueList($paymentPage, $btn);
-
-        $csvList = $this->getPaymentCSV($client);
-        $cardLogs = convertToCardLogs($csvList);
-
-        $this->cardLogRepo->store($cardLogs);
-    }
-
-    private function getPaymentPage($client)
+    protected function getPaymentPage($client, $cardServiceId, $cardServicePassword)
     {
         $loginPage = $client->request('GET', 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp');
         $loginForm = $loginPage->filter('form[name=loginForm]')->form();
-        // $loginForm['loginId'] = 'aaaa';
-        // $loginForm['passWord'] = 'aaaa';
+
+        $loginForm['loginId'] = $cardServiceId;
+        $loginForm['passWord'] = $cardServicePassword;
+        
         $client->submit($loginForm);
 
         return $client->request('GET', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do');
     }
 
-    private function getBtnValueList($paymentPage, $targetBtn): array
+    protected function getBtnValueList($paymentPage, $targetBtn): array
     {
         if (! $paymentPage->filter("input[name={$targetBtn}]")) throw new \Exception('エポスカードの何らかの不具合（未払い含む）によりログを取得できませんでした。');
         
@@ -68,7 +53,7 @@ class ScrapingEposCard extends ScrapingCard
         ];
     }
 
-    private function getPaymentCSV($client): array
+    protected function getPaymentCSV($client): array
     {
         $paymentDetailPage = $client->request('POST', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_dispatch.do', $btnValueList);
         $csvDownloadButton = $paymentDetailPage->filter('input[name=csvDownloadButton]')->attr('value');
@@ -87,7 +72,7 @@ class ScrapingEposCard extends ScrapingCard
         return $csvList;
     }
 
-    private function convertToCardLogs(array $csvList): CardLogs
+    protected function convertToCardLogs(array $csvList): CardLogs
     {
         $cardLogs = new CardLogs;
         foreach ($csvList as $csv) {

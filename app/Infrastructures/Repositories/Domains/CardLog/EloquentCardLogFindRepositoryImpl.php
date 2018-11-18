@@ -7,6 +7,8 @@ use App\Infrastructures\Eloquents\EloquentCardLog;
 use App\Domains\CardLog\CardLogs;
 use App\Domains\CardLog\CardLogFindRepository;
 
+use App\Domains\Account\AccountId;
+
 class EloquentCardLogFindRepositoryImpl implements CardLogFindRepository
 {
     private $eloquent;
@@ -21,9 +23,10 @@ class EloquentCardLogFindRepositoryImpl implements CardLogFindRepository
         return;
     }
 
-    public function findAllByThisMonth(): CardLogs
+    public function findAllThisMonthByAccountId(AccountId $accountId): CardLogs
     {
         $records = $this->eloquent
+            ->where('user_id', $accountId->value())
             ->whereRaw('DATE_FORMAT( ADDDATE(CURDATE(), INTERVAL -1 MONTH), "%Y-%m-01" ) <= used_date')
             ->whereRaw('used_date <=  LAST_DAY( ADDDATE(CURDATE(), INTERVAL -1 MONTH) )')
             ->get();

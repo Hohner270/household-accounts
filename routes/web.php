@@ -11,15 +11,14 @@
 |
 */
 
-// Route::middleware(['guest'])->group(function () {
+Route::middleware(['guest'])->group(function () {
     Route::get('/signIn', 'SignInController@signIn');
     Route::post('/signIn', 'SignInController@check');
 
     Route::get('/signUp', 'UsersController@create');
     Route::post('/signUp', 'UsersController@store');
-// });
+});
 
-// Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
-    Route::get('/card', 'Api\CardController@index');
-// });
+});
