@@ -2,21 +2,27 @@
 
 namespace App\Domains\CardAccount\CardAccount;
 
-use App\Domains\CardAccount\CardAccountId;
-use App\Domains\CardAccount\CardAccountPassword;
+use App\Domains\CardAccount\EncryptedCardAccountId;
+use App\Domains\CardAccount\EncryptedCardAccountPassword;
 
 class CardAccount
 {
-    private $cardAccountId;
-    private $cardAccountPassword;
+    private $id;
+    private $password;
 
-    public function id(): CardAccountId
+    public function __construct(EncryptedCardAccountId $id, EncryptedCardAccountPassword $password)
     {
-        return $this->cardAccountId;
+        $this->id = $id;
+        $this->password = $password;
     }
 
-    public function password(): CardAccountPassword
+    public function id(): EncryptedCardAccountId
     {
-        return $this->cardAccountPassword;
+        return $this->id;
+    }
+
+    public function password(): EncryptedCardAccountPassword
+    {
+        return $this->password;
     }
 }

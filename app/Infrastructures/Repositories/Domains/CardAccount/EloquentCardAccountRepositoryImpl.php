@@ -15,12 +15,12 @@ class EloquentCardAccountRepositoryImpl implements CardAccountRepository
         $this->eloquent = $eloquent;
     }
 
-    public function store(AccountId $accountId, CardId $cardId, CardAccountId $cardAccountId, CardAccountPassword $cardAccountPassword): CardAccount
+    public function store(AccountId $accountId, CardId $cardId, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword): CardAccount
     {
         $this->eloquent->user_id = $accountId;
         $this->eloquent->card_id = $cardId;
-        $this->eloquent->card_sign_in_id = $cardAccountId;
-        $this->eloquent->card_sign_in_password = $cardAccountPassword;
+        $this->eloquent->card_sign_in_id = $encryptedCardAccountId;
+        $this->eloquent->card_sign_in_password = $encryptedCardAccountPassword;
         $this->eloquent->save();
 
         return $this->eloquent->toDomain();

@@ -22,7 +22,7 @@ class AccountPassword
         return $this->password;
     }
 
-    public function passwordToHash(): AccountHashedPassword
+    public function hash(): AccountHashedPassword
     {
         return new AccountHashedPassword(password_hash($this->password, PASSWORD_DEFAULT));
     }

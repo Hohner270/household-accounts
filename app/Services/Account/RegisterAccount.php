@@ -37,7 +37,7 @@ class RegisterAccount
         $account = $this->accountRepo->store(
             new AccountName($accountName),
             new EmailAddress($email),
-            $password->passwordToHash()
+            $password->hash()
         );
 
         $this->sessionRepo->store($account);

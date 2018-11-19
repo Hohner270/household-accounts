@@ -2,7 +2,9 @@
 
 namespace App\Domains\CardAccount;
 
-class CardAccountPassword
+use App\Domains\Encryption;
+
+class CardAccountPassword extends Encryption
 {
     private $cardPassword;
 

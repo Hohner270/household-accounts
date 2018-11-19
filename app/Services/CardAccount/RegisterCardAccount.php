@@ -21,13 +21,18 @@ class RegisterCardAccount
         $this->cardAccountRepo = $cardAccountRepo;
     }
 
-    public function __invoke(CardId $cardId, AccountId $accountId, CardAccountId $cardAccountId, CardAccountPassword $cardAccountPassword): CardAccount
+    public function __invoke(CardId $cardId, AccountId $accountId, string $cardAccountId, string $cardAccountPassword): CardAccount
     {
-        return $this->cardAccountRepo->store(
+        $cardAccountId = new CardAccountId($cardAccountId);
+        $cardAccountPassword = new CardAccountPassword($cardAccountPassword);
+
+        $cardAccount = $this->cardAccountRepo->store(
             $cardId,
             $accountId,
-            $cardSignInId,
-            $cardSignInPassword
+            $cardAccountId->encrypt(),
+            $cardAccountPassword->encrypt()
         );
+
+        return $cardAccount;
     }
 }
