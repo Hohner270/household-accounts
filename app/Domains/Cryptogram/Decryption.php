@@ -8,14 +8,14 @@ abstract class Decryption extends Cryptogram
 {
     abstract public function value();
 
-    public function decrypt(): string
+    public function decryptedValue(): string
     {
         return openssl_decrypt(
             $this->value(),
-            parent::$method, 
-            parent::$key, 
-            parent::$options, 
-            parent::$iv
+            $this->method, 
+            $this->key, 
+            $this->options, 
+            $this->iv
         );
     }
 }

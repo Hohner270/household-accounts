@@ -25,7 +25,7 @@ class RegisterCardAccount
     {
         $cardAccountId = new CardAccountId($cardAccountId);
         $cardAccountPassword = new CardAccountPassword($cardAccountPassword);
-
+        
         $cardAccount = $this->cardAccountRepo->store(
             $cardId,
             $accountId,

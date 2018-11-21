@@ -44,7 +44,6 @@ class UserCreateRequest extends FormRequest
             'password.max'                   => 'パスワードを60文字以内で入力してください',
             'password_confirmation.required' => '確認用パスワードを入力してください',
 
-
             'account.required'               => 'emailアドレスかパスワードが間違っています',
         ];
     }

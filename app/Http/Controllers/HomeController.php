@@ -21,7 +21,7 @@ class HomeController extends Controller
 
     public function index(Request $request, FindUserCardLogs $service)
     {
-        $account = $request->account;
+        $account = $this->getAccount();
         $cards = $this->cardFindRepo->findAll();
 
         $cardLogs = $service($account);

@@ -2,7 +2,9 @@
 
 namespace App\Domains\CardAccount;
 
-use App\Domains\Encryption;
+use App\Domains\Cryptogram\Encryption;
+
+use App\Domains\CardAccount\EncryptedCardAccountId;
 
 class CardAccountId extends Encryption
 {
@@ -16,5 +18,10 @@ class CardAccountId extends Encryption
     public function value(): string
     {
         return $this->cardAccountId;
+    }
+
+    public function encrypt(): EncryptedCardAccountId
+    {
+        return new EncryptedCardAccountId($this->encryptedValue());
     }
 }

@@ -2,7 +2,9 @@
 
 namespace App\Domains\CardAccount;
 
-use App\Domains\Encryption;
+use App\Domains\Cryptogram\Encryption;
+
+use App\Domains\CardAccount\EncryptedCardAccountPassword;
 
 class CardAccountPassword extends Encryption
 {
@@ -16,5 +18,10 @@ class CardAccountPassword extends Encryption
     public function value(): string
     {
         return $this->cardPassword;
+    }
+
+    public function encrypt(): EncryptedCardAccountPassword
+    {
+        return new EncryptedCardAccountPassword($this->encryptedValue());
     }
 }

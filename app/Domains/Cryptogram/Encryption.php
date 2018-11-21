@@ -8,14 +8,16 @@ abstract class Encryption extends Cryptogram
 {
     abstract public function value();
     
-    public function encrypt(): string
+    public function encryptedValue(): string
     {
-        return openssl_encrypt(
+        $encrypted = openssl_encrypt(
             $this->value(),
-            parent::$method, 
-            parent::$key, 
-            parent::$options, 
-            parent::$iv
+            $this->method,
+            $this->key,
+            $this->options, 
+            $this->iv
         );
+
+        return base64_encode($encrypted);
     }
 }

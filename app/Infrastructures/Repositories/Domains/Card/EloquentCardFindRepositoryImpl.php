@@ -21,7 +21,7 @@ class EloquentCardFindRepositoryImpl implements CardFindRepository
     public function findById(CardId $cardId): Card
     {
         $card = $this->eloquent->find($cardId->value());
-        return $this->eloquent->toDomain($card);
+        return $card->toDomain();
     }
 
     public function findAll(): Cards

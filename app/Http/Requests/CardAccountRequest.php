@@ -13,7 +13,7 @@ class CardAccountRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class CardAccountRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'cardId'              => 'required|integer',
+            'cardAccountId'       => 'required|string|max:255',
+            'cardAccountPassword' => 'required|string|max:255'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'cardId.required'              => 'カードを選択してください',
+            'cardId.integer'               => '数値で数値で入力してください',
+            
+            'cardAccountId.required'       => '選択したカードのログインIDを入力してください',
+            'cardAccountId.string'         => '文字列で入力してください',
+            'cardAccountId.max'            => '255文字以内で入力してください',
+
+            'cardAccountPassword.required' => '選択したカードのログインパスワードを入力してください',
+            'cardAccountPassword.string'   => '文字列で入力してください',
+            'cardAccountPassword.max'      => '255文字以内で入力してください'
         ];
     }
 }

@@ -22,19 +22,15 @@ class RedirectIfAuthenticated
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
-     * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+    public function handle($request, Closure $next)
     {
         try {
             $account = $this->sessionRepo->find();
         } catch (NotFoundException $e) {
             return redirect('/signIn');
         }
-
-        // ここで変数にユーザーを入れてもいいのか？ リクエストの中に入れちゃう？
-        $request->account = $account;
 
         return $next($request);
     }

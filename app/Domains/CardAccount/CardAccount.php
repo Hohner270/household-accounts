@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Domains\CardAccount\CardAccount;
+namespace App\Domains\CardAccount;
 
 use App\Domains\CardAccount\EncryptedCardAccountId;
 use App\Domains\CardAccount\EncryptedCardAccountPassword;

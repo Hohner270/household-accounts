@@ -21,4 +21,7 @@ Route::middleware(['guest'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index');
+    
+    Route::get('/cardAccounts/create', 'CardAccountsController@create');
+    Route::post('/cardAccounts', 'CardAccountsController@store');
 });
