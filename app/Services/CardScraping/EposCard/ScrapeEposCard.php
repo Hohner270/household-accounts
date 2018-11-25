@@ -18,30 +18,40 @@ use App\Domains\CardLog\Payment;
 use App\Domains\CardLog\PaymentTimes;
 use App\Domains\CardLog\CardLogRepository;
 
-use App\Domains\Card\CardId;
+use App\Domains\CardAccount\EncryptedCardAccountId;
+use App\Domains\CardAccount\EncryptedCardAccountPassword;
 
 abstract class ScrapeEposCard implements ScrapeCard
 {
     const EPOS_CARD_ID = 1;
+    const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/547.36 (KHTML, like Gecko) Chrome';
+    
+    const LOGIN_URI = 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp';
+    const PAYMENT_URI = 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do';
+    const PAYMENT_DETAIL_URI = 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_dispatch.do';
+    const CSV_REQUEST_URI = 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_detail_dispatch.do';
 
     protected $cardLogRepo;
+    protected $client;
 
-    public function __construct(CardLogRepository $cardLogRepo)
+    public function __construct(CardLogRepository $cardLogRepo, Client $client)
     {
         $this->cardLogRepo = $cardLogRepo;
+        $this->client = $client;
+        $this->client->setHeader('User-Agent', self::USER_AGENT);
     }
 
-    protected function getPaymentPage($client, $cardServiceId, $cardServicePassword)
+    protected function getPaymentPage($client, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword)
     {
-        $loginPage = $client->request('GET', 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp');
+        $loginPage = $client->request('GET', self::LOGIN_URI);
         $loginForm = $loginPage->filter('form[name=loginForm]')->form();
 
-        $loginForm['loginId'] = $cardServiceId;
-        $loginForm['passWord'] = $cardServicePassword;
+        $loginForm['loginId'] = $encryptedCardAccountId->decrypt();
+        $loginForm['passWord'] = $encryptedCardAccountPassword->decrypt();
         
         $client->submit($loginForm);
 
-        return $client->request('GET', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do');
+        return $client->request('GET', self::PAYMENT_URI);
     }
 
     protected function getBtnValueList($paymentPage, $targetBtn): array
@@ -55,11 +65,12 @@ abstract class ScrapeEposCard implements ScrapeCard
 
     protected function getPaymentCSV($client): array
     {
-        $paymentDetailPage = $client->request('POST', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_dispatch.do', $btnValueList);
+        $paymentDetailPage = $client->request('POST', self::PAYMENT_DETAIL_URI, $btnValueList);
         $csvDownloadButton = $paymentDetailPage->filter('input[name=csvDownloadButton]')->attr('value');
     
-        $client->request('POST', 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_detail_dispatch.do', ['csvDownloadButton' => $csvDownloadButton]);
+        $client->request('POST', self::CSV_REQUEST_URI, ['csvDownloadButton' => $csvDownloadButton]);
         $content = $client->getResponse()->getContent();
+        
         if (! $content) throw new \Exception('支払いログを取得できませんでした。');
 
         $csv = mb_convert_encoding($content, "UTF-8", 'Windows-31J');

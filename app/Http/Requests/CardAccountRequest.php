@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class CardAccountRequest extends FormRequest
 {
     /**
@@ -44,5 +45,10 @@ class CardAccountRequest extends FormRequest
             'cardAccountPassword.string'   => '文字列で入力してください',
             'cardAccountPassword.max'      => '255文字以内で入力してください'
         ];
+    }
+
+    public function toDomain()
+    {
+
     }
 }

@@ -29,14 +29,14 @@ class CardAccountsController extends Controller
         return view('card_accounts.create', $data);
     }
 
-    public function store(CardAccountRequest $request, RegisterCardAccount $service)
+    public function store(CardAccountRequest $request, RegisterCardAccount $registerCardAccount)
     {
         $account = $this->getAccount();
 
         $cardId = new CardId($request->cardId);
         $card = $this->cardFindRepo->findById($cardId);
 
-        $cardAccount = $service(
+        $cardAccount = $registerCardAccount(
             $card->id(),
             $account->id(),
             $request->cardAccountId,

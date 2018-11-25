@@ -2,26 +2,36 @@
 
 namespace App\Services\CardScraping\EposCard;
 
+use Goutte\Client;
+
 use App\Services\CardScraping\EposCard\ScrapeEposCard;
 
-class ScrapeCurrentMonth extends ScrapeEposCard
+use App\Domains\Account\AccountId;
+
+use App\Domains\CardLog\SessionCardLogRepository;
+
+class ScrapeNextMonth extends ScrapeEposCard
 {
-    // public function __construct(CardLogRepository $cardLogRepo)
-    // {
-    //     $this->cardLogRepo = $cardLogRepo;
-    // }
+    private $sessionRepo;
 
-    public function _invoke()
+    public function __construct(SessionCardLogRepository $sessionRepo)
     {
-        $client = new Client();
-        $client->setHeader('User-Agent','Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/547.36 (KHTML, like Gecko) Chrome');
+        $this->sessionRepo = $sessionRepo;
+    }
 
-        $paymentPage = $this->getPaymentPage($client);
+    public function __invoke(AccountId $accountId, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword)
+    {
+        $paymentPage = $this->getPaymentPage(
+            $this->client, 
+            $encryptedCardAccountId, 
+            $encryptedCardAccountPassword
+        );
+        
         $btnValueList = $this->getBtnValueList($paymentPage, 'nextButton');
 
-        $csvList = $this->getPaymentCSV($client);
-        $cardLogs = convertToCardLogs($csvList);
+        $csvList = $this->getPaymentCSV($this->client);
+        $cardLogs = $this->convertToCardLogs($csvList);
 
-        $this->cardLogRepo->store($cardLogs);
+        $this->sessionRepo->store($cardLogs, $accountId);
     }
 }
