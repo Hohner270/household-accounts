@@ -16,33 +16,27 @@ class HomeController extends Controller
 {
     private $cardFindRepo;
     private $cardLogFindRepo;
-    private $sessionRepo;
+    private $sessionCardLogRepo;
 
-    public function __construct(CardFindRepository $cardFindRepo, CardLogFindRepository $cardLogFindRepo, SessionCardLogRepository $sessionRepo)
+    public function __construct(CardFindRepository $cardFindRepo, CardLogFindRepository $cardLogFindRepo, SessionCardLogRepository $sessionCardLogRepo)
     {
         $this->cardFindRepo = $cardFindRepo;
         $this->cardLogFindRepo = $cardLogFindRepo;
-        $this->sessionRepo = $sessionRepo;
+        $this->sessionCardLogRepo = $sessionCardLogRepo;
     }
 
     public function index(Request $request, ScrapeNextMonth $scrapeNextMonth)
     {
         $account = $this->getAccount();
-        
         $cards = $this->cardFindRepo->findAll();
-        $cardLogs = $this->cardLogFindRepo->findAllThisMonthByAccountId($account->id());
         
-        // まずどのカードをスクレイピングするのか
-        // $scrapeNextMonth(
-        //     $account->id(),
-        //     $account->id(),
-        // );
-
-        $this->sessionRepo->find($account->id());
+        $currentMonthCardLogs = $this->cardLogFindRepo->findAllThisMonthByAccountId($account->id());
+        $nextMonthCardLogs = $this->sessionCardLogRepo->find($account->id());
 
         $data = [
-            'cards'    => $cards->collect(),
-            'cardLogs' => $cardLogs->collect(),
+            'cards'             => $cards->collect(),
+            'nextMonthCardLogs' => $nextMonthCardLogs,
+            'currentMonthCardLogs' => $currentMonthCardLogs,
         ];
 
         return view('home.index', $data);

@@ -21,7 +21,8 @@
                 <th>支払区分</th>
             </thead>
             <tbody>
-                @foreach($cardLogs as $cardlog)
+                <div>{{ $currentMonthCardLogs->total() . '円' }}</div>
+                @foreach($currentMonthCardLogs->collect() as $cardlog)
                     <tr>
                         <td>{{ $cardlog->storeName()->value() }}</td>
                         <td>{{ $cardlog->usedDate()->value() }}</td>
@@ -50,7 +51,8 @@
                 <th>支払区分</th>
             </thead>
             <tbody>
-                {{-- @foreach($cardLogs as $cardlog)
+                <div>{{ $nextMonthCardLogs->total() . '円' }}</div>
+                @foreach($nextMonthCardLogs->collect() as $cardlog)
                     <tr>
                         <td>{{ $cardlog->storeName()->value() }}</td>
                         <td>{{ $cardlog->usedDate()->value() }}</td>
@@ -60,7 +62,7 @@
                         <td>{{ $cardlog->payment()->value() }}</td>
                         <td>{{ $cardlog->paymentTimes()->value() }}</td>
                     </tr>
-                @endforeach --}}
+                @endforeach
             </tbody>
         </table>
 

@@ -38,7 +38,7 @@ class CardAccountsController extends Controller
 
         $cardAccount = $registerCardAccount(
             $card->id(),
-            $account->id(),
+            $account,
             $request->cardAccountId,
             $request->cardAccountPassword
         );

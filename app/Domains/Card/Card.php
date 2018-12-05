@@ -7,6 +7,8 @@ use App\Domains\Card\CardName;
 
 class Card
 {
+    const EPOS_CARD = 1;
+    
     private $id;
     private $cardName;
 

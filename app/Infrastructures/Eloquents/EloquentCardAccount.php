@@ -5,6 +5,8 @@ namespace App\Infrastructures\Eloquents;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
+use App\Domains\Card\CardId;
+
 use App\Domains\CardAccount\CardAccount;
 use App\Domains\CardAccount\CardAccounts;
 use App\Domains\CardAccount\EncryptedCardAccountId;
@@ -17,8 +19,9 @@ class EloquentCardAccount extends Model
     public function toDomain(): CardAccount
     {
         return new CardAccount(
-            new EncryptedCardAccountId($this->card_sign_in_id),
-            new EncryptedCardAccountPassword($this->card_sign_in_password)
+            new EncryptedCardAccountId(base64_decode($this->card_sign_in_id)),
+            new EncryptedCardAccountPassword(base64_decode($this->card_sign_in_password)),
+            new CardId($this->card_id)
         );
     }
 

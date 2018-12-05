@@ -2,24 +2,22 @@
 
 namespace App\Domains\CardLog;
 
-use Illuminate\Support\Collection;
+use App\Domains\Collections;
 
-class CardLogs
+class CardLogs extends Collections
 {
-    private $cardLogs;
-
-    public function __construct()
-    {
-        $this->cardLogs = collect();
-    }
-
     public function add(CardLog $cardLog)
     {
-        $this->cardLogs->push($cardLog);
+        $this->domains->push($cardLog);
     }
 
-    public function collect(): Collection
+    public function total(): int
     {
-        return clone $this->cardLogs;
+        $price = 0;
+        foreach ($this->domains as $cardLog) {
+            $price += $cardLog->usedPrice()->value();
+        }
+
+        return $price;
     }
 }

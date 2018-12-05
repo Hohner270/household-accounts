@@ -26,8 +26,8 @@ class EloquentCardAccountRepositoryImpl implements CardAccountRepository
     {
         $this->eloquent->user_id = $accountId->value();
         $this->eloquent->card_id = $cardId->value();
-        $this->eloquent->card_sign_in_id = $encryptedCardAccountId->value();
-        $this->eloquent->card_sign_in_password = $encryptedCardAccountPassword->value();
+        $this->eloquent->card_sign_in_id = base64_encode($encryptedCardAccountId->value());
+        $this->eloquent->card_sign_in_password = base64_encode($encryptedCardAccountPassword->value());
         $this->eloquent->save();
 
         return $this->eloquent->toDomain();
