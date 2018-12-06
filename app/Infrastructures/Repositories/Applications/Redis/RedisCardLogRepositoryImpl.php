@@ -39,22 +39,7 @@ class RedisCardLogRepositoryImpl implements SessionCardLogRepository
 
     public function store(CardLogs $cardLogs, AccountId $accountId)
     {
-        $cardLogList = [];
-        foreach ($cardLogs->collect() as $cardLog) {
-            $cardLogList[] = [
-                'id'           => $cardLog->id()->value(),
-                'cardId'       => $cardLog->cardId()->value(),
-                'payment'      => $cardLog->payment()->value(),
-                'paymentTimes' => $cardLog->paymentTimes()->value(),
-                'storeName'    => $cardLog->storeName()->value(),
-                'usedContent'  => $cardLog->usedContent()->value(),
-                'usedDate'     => $cardLog->usedDate()->value(),
-                'usedPlace'    => $cardLog->usedPlace()->value(),
-                'usedPrice'    => $cardLog->usedPrice()->value(),
-            ];
-        }
-
-        $this->redis->set(self::REDIS_KEY . $accountId->value(), json_encode($cardLogList));
+        $this->redis->set(self::REDIS_KEY . $accountId->value(), $cardLogs->toJson());
     }
 
     public function toDomains(array $cardLogList): CardLogs

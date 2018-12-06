@@ -24,4 +24,6 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/cardAccounts/create', 'CardAccountsController@create');
     Route::post('/cardAccounts', 'CardAccountsController@store');
+
+    Route::get('/cardLogs', 'Api\CardLogsController@index');
 });
