@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 
 use App\Domains\CardLog\SessionCardLogRepository;
 
+use App\Services\CardScraping\EposCard\ScrapeNextMonth;
+
 class CardLogsController extends Controller
 {
     private $sessionCardLogRepo;
@@ -21,10 +23,20 @@ class CardLogsController extends Controller
         $nextMonthCardLogs = $this->sessionCardLogRepo->find($account->id());
 
         return response()->json($nextMonthCardLogs->toJson());
+
     }
 
-    public function update()
+    public function update(ScrapeNextMonth $scrapeNextMonth)
     {
-        
+        $account = $this->getAccount();
+        $eposCardAccount = $account->cardAccounts()->eposCardAccount();
+
+        $nextMonthCardLogs = $scrapeNextMonth(
+            $account->id(),
+            $eposCardAccount->id(),
+            $eposCardAccount->password()
+        );
+
+        return response()->json($nextMonthCardLogs->toJson());
     }
 }

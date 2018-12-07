@@ -26,4 +26,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/cardAccounts', 'CardAccountsController@store');
 
     Route::get('/cardLogs', 'Api\CardLogsController@index');
+    Route::put('/cardLogs', 'Api\CardLogsController@update');
 });

@@ -9,9 +9,6 @@ use App\Domains\Card\CardFindRepository;
 use App\Domains\CardLog\CardLogFindRepository;
 use App\Domains\CardLog\SessionCardLogRepository;
 
-use App\Services\CardScraping\EposCard\ScrapeNextMonth;
-
-
 class HomeController extends Controller
 {
     private $cardFindRepo;
@@ -25,7 +22,7 @@ class HomeController extends Controller
         $this->sessionCardLogRepo = $sessionCardLogRepo;
     }
 
-    public function index(Request $request, ScrapeNextMonth $scrapeNextMonth)
+    public function index(Request $request)
     {
         $account = $this->getAccount();
         $cards = $this->cardFindRepo->findAll();

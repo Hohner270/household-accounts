@@ -5,16 +5,19 @@
         <h2>CardLog</h2>
         <div>
             @foreach($cards as $card)
-                <button class="js-button button" type="button" value="{{ $card->id()->value() }}">{{ $card->cardName()->value() }}</button>
+                <button id="js-button" class="button" type="button" value="{{ $card->id()->value() }}">{{ $card->cardName()->value() }}</button>
             @endforeach
         </div>
         
-        <canvas id="js-pieChart"></canvas>
-
         <div>
-            <a href="">add card account</a>
-            <a href="">past card logs</a>
+            <canvas id="js-pieChart"></canvas>
+            <div id="js-totalPayment"></div>
+            <div>
+                <button id="js-updateButton" class="button">Update</button>
+            </div>
         </div>
+
+
     </section>
 @endsection
 

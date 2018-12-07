@@ -1,49 +1,48 @@
 import Chart from 'chart.js';
+import CardLogs from './Models/CardLog/CardLogs';
 
+const updateButton = document.getElementById('js-updateButton');
+const totalPaymentElement = document.getElementById('js-totalPayment');
 const pieChartElement = document.getElementById('js-pieChart');
 
-fetch("/cardLogs", {
-    method: 'get'
-}).then((response) => {
-    return response.json();
-}).then((json) => {
-    const cardLogs = JSON.parse(json);
-    let chartDataList = {
-        payment: [],
-        color: [],
-    }
+const cardLogs = new CardLogs;
 
-    // 店舗（カードを使用した場所）ごとに「支払い金額」の統計をとる
-    for (let index in cardLogs) {
-        let usedPlace = cardLogs[index].usedPlace.trim();
-        
-        if (! chartDataList['payment'][usedPlace]) {
-            chartDataList['payment'][usedPlace] = 0;
-        }
+(async () => {
+    await cardLogs.setMyCardLogs();
+    const chartConfig = await getChartConfig(cardLogs);
+    const pieChart = new Chart(pieChartElement, chartConfig);
+})();
 
-        if (! chartDataList['color'][usedPlace]) {
-            chartDataList['color'][usedPlace] = '#' + ("00000" + Math.floor(Math.random() * 0x1000000).toString(16)).substr(-6);
-        }
 
-        chartDataList['payment'][usedPlace] += cardLogs[index].payment;
-    }
+updateButton.addEventListener('click', async () => {
+    await cardLogs.update();    
+    const chartConfig = await getChartConfig(cardLogs);
+    const pieChart = new Chart(pieChartElement, chartConfig);
+});
 
-    const chartData = {
-        datasets: [{
-            data: Object.values(chartDataList.payment),
-            backgroundColor: Object.values(chartDataList.color)
-        }],
-        labels: Object.keys(chartDataList.payment),
-    }
-    console.log(chartData);
+async function getChartConfig(cardLogs) {
+    await cardLogs.setMyCardLogs();
+
+    totalPaymentElement.innerText = cardLogs.getTotalPayment();
+
+    const paymentList = cardLogs.getPaymentListGroupByUsedPlace();
+    const colorList = cardLogs.getColorListGroupByUsedPlace();
     
-    const pieChart = new Chart(pieChartElement, {
+    const charConfig = {
         type: 'doughnut',
-        data: chartData,
+        data: {
+            datasets: [{
+                data: Object.values(paymentList),
+                backgroundColor: Object.values(colorList)
+            }],
+            labels: Object.keys(paymentList),
+        },
         options: {
             animation: {
                 animateScale: true
             }
         }
-    }); 
-});
+    }
+
+    return charConfig;
+}

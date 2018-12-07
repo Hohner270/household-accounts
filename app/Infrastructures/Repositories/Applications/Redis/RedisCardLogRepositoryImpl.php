@@ -34,7 +34,7 @@ class RedisCardLogRepositoryImpl implements SessionCardLogRepository
     public function find(AccountId $accountId): CardLogs
     {
         $cardLogList = json_decode($this->redis->get(self::REDIS_KEY . $accountId->value()));
-        return $this->toDomains($cardLogList);
+        return $this->toDomains((array)$cardLogList);
     }
 
     public function store(CardLogs $cardLogs, AccountId $accountId)

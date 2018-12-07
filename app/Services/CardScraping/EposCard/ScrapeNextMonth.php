@@ -9,6 +9,7 @@ use App\Services\CardScraping\EposCard\ScrapeEposCard;
 use App\Domains\Account\AccountId;
 
 use App\Domains\CardLog\SessionCardLogRepository;
+use App\Domains\CardLog\CardLogs;
 
 use App\Domains\CardAccount\EncryptedCardAccountId;
 use App\Domains\CardAccount\EncryptedCardAccountPassword;
@@ -25,7 +26,7 @@ class ScrapeNextMonth extends ScrapeEposCard
         $this->sessionRepo = $sessionRepo;
     }
 
-    public function __invoke(AccountId $accountId, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword)
+    public function __invoke(AccountId $accountId, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword): CardLogs
     {
         $paymentPage = $this->getPaymentPage(
             $encryptedCardAccountId,
@@ -38,5 +39,6 @@ class ScrapeNextMonth extends ScrapeEposCard
         $cardLogs = $this->convertToCardLogs($csvList);
 
         $this->sessionRepo->store($cardLogs, $accountId);
+        return $cardLogs;
     }
 }
