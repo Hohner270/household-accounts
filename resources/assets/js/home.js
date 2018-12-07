@@ -15,13 +15,12 @@ const cardLogs = new CardLogs;
 
 
 updateButton.addEventListener('click', async () => {
-    await cardLogs.update();    
+    await cardLogs.update();
     const chartConfig = await getChartConfig(cardLogs);
     const pieChart = new Chart(pieChartElement, chartConfig);
 });
 
 async function getChartConfig(cardLogs) {
-    await cardLogs.setMyCardLogs();
 
     totalPaymentElement.innerText = cardLogs.getTotalPayment();
 

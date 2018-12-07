@@ -20995,10 +20995,6 @@ var getChartConfig = function () {
             while (1) {
                 switch (_context3.prev = _context3.next) {
                     case 0:
-                        _context3.next = 2;
-                        return cardLogs.setMyCardLogs();
-
-                    case 2:
 
                         totalPaymentElement.innerText = cardLogs.getTotalPayment();
 
@@ -21021,7 +21017,7 @@ var getChartConfig = function () {
                         };
                         return _context3.abrupt('return', charConfig);
 
-                    case 7:
+                    case 5:
                     case 'end':
                         return _context3.stop();
                 }

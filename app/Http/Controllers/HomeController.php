@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
         $account = $this->getAccount();
         $cards = $this->cardFindRepo->findAll();
-        
+
         $currentMonthCardLogs = $this->cardLogFindRepo->findAllThisMonthByAccountId($account->id());
         $nextMonthCardLogs = $this->sessionCardLogRepo->find($account->id());
 

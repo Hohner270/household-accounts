@@ -51,7 +51,7 @@ export default class CardLogs extends ApiModel
             
             paymentList[this.cardLogs[index].usedPlace] += this.cardLogs[index].payment;
         }
-        
+
         return paymentList;
     }
 
