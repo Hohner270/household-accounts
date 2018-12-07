@@ -8,18 +8,6 @@ export default class CardLogs extends ApiModel
         this.cardLogs = [];
     }
 
-    async update() {
-        const response = await fetch("/cardLogs", { 
-            method: 'put',
-            headers: this.headers
-        });
-        const json = await response.json();
-        const cardLogsObj = JSON.parse(json);
-        
-        this.add(cardLogsObj);
-        return;
-    }
-
     async setMyCardLogs() {
         const response = await fetch("/cardLogs", {
             headers: this.headers
@@ -31,7 +19,19 @@ export default class CardLogs extends ApiModel
         return;
     }
 
-    add (cardLogsObj) {
+    async update() {
+        const response = await fetch("/cardLogs", {
+            method: 'put',
+            headers: this.headers
+        });
+        const json = await response.json();
+        const cardLogsObj = JSON.parse(json);
+
+        this.add(cardLogsObj);
+        return;
+    }
+
+    add(cardLogsObj) {
         for (let index in cardLogsObj) {
             let cardLog = new CardLog(
                 cardLogsObj[index].usedPlace.trim(),

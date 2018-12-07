@@ -31649,7 +31649,7 @@ var CardLogs = function (_ApiModel) {
     }
 
     _createClass(CardLogs, [{
-        key: 'update',
+        key: 'setMyCardLogs',
         value: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
                 var response, json, cardLogsObj;
@@ -31659,7 +31659,6 @@ var CardLogs = function (_ApiModel) {
                             case 0:
                                 _context.next = 2;
                                 return fetch("/cardLogs", {
-                                    method: 'put',
                                     headers: this.headers
                                 });
 
@@ -31684,14 +31683,14 @@ var CardLogs = function (_ApiModel) {
                 }, _callee, this);
             }));
 
-            function update() {
+            function setMyCardLogs() {
                 return _ref.apply(this, arguments);
             }
 
-            return update;
+            return setMyCardLogs;
         }()
     }, {
-        key: 'setMyCardLogs',
+        key: 'update',
         value: function () {
             var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
                 var response, json, cardLogsObj;
@@ -31701,6 +31700,7 @@ var CardLogs = function (_ApiModel) {
                             case 0:
                                 _context2.next = 2;
                                 return fetch("/cardLogs", {
+                                    method: 'put',
                                     headers: this.headers
                                 });
 
@@ -31725,11 +31725,11 @@ var CardLogs = function (_ApiModel) {
                 }, _callee2, this);
             }));
 
-            function setMyCardLogs() {
+            function update() {
                 return _ref2.apply(this, arguments);
             }
 
-            return setMyCardLogs;
+            return update;
         }()
     }, {
         key: 'add',
