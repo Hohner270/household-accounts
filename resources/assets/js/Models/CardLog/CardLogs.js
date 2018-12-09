@@ -27,6 +27,7 @@ export default class CardLogs extends ApiModel
         const json = await response.json();
         const cardLogsObj = JSON.parse(json);
 
+        this.cardLogs = [];
         this.add(cardLogsObj);
         return;
     }

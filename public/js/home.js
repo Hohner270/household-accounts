@@ -31714,10 +31714,11 @@ var CardLogs = function (_ApiModel) {
                                 cardLogsObj = JSON.parse(json);
 
 
+                                this.cardLogs = [];
                                 this.add(cardLogsObj);
                                 return _context2.abrupt('return');
 
-                            case 9:
+                            case 10:
                             case 'end':
                                 return _context2.stop();
                         }
