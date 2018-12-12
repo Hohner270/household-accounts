@@ -19,7 +19,7 @@ PHP 7.2　　
 
 redis 5.0　　
 
-## Setup　Dev
+## Setup Dev
 
 -- laradock --　　
 
