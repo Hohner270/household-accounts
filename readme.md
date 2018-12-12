@@ -9,8 +9,8 @@
 
 ## Dependency
 
-*laravel 5.6　　
-*MySQL 5.7　　
+*laravel5.6　　
+*MySQL5.7　　
 *nginx 1.13.12　　
 *PHP 7.2　　
 *redis 5.0　　
