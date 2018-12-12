@@ -10,15 +10,23 @@
 ## Dependency
 
 laravel 5.6　　
+
 MySQL 5.7　　
+
 nginx 1.13.12　　
+
 PHP 7.2　　
+
 redis 5.0　　
 
 ## Setup　Dev
 
 -- laradock --　　
+
 git clone https://github.com/LaraDock/laradock.git　　
+
 cd laradock　　
+
 cp env-example .env　　
+
 docker-compose up -d nginx mysql redis workspace　　
