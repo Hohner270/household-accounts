@@ -35,6 +35,7 @@ class HttpSessionAccountRepositoryImpl implements SessionAccountRepository
     public function find(): Account
     {
         $account = $this->session->get(self::SESSION_KEY);
+        $this->session->regenerate();
         if (empty($account)) {
             throw new NotFoundException('not signin');
         }
