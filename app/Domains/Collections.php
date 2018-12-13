@@ -6,6 +6,9 @@ use Illuminate\Support\Collection;
 
 abstract class Collections
 {
+    /**
+     * @var Collection $domains
+     */
     protected $domains;
 
     public function __construct()
@@ -13,6 +16,9 @@ abstract class Collections
         $this->domains = collect();
     }
 
+    /**
+     * @return Collection
+     */
     public function collect(): Collection
     {
         return clone $this->domains;

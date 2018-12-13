@@ -7,8 +7,14 @@ use App\Domains\Account\AccountSpec;
 
 class AccountName
 {
+    /**
+     * @var string $accountName
+     */
     private $accountName;
 
+    /**
+     * @param string $accountName
+     */
     public function __construct(string $accountName)
     {
         if (! AccountSpec::canAccountName($accountName)) throw new InitializeException('Invalid value: ' . $accountName);
@@ -17,6 +23,9 @@ class AccountName
         $this->accountName = $accountName;
     }
 
+    /**
+     * @return string
+     */
     public function value(): string
     {
         return $this->accountName;

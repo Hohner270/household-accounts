@@ -8,6 +8,9 @@ abstract class Encryption extends Cryptogram
 {
     abstract public function value();
     
+    /**
+     * @return string
+     */
     public function encryptedValue(): string
     {
         return openssl_encrypt(

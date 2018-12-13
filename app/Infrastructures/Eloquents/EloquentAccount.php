@@ -41,7 +41,10 @@ class EloquentAccount extends Authenticatable
 
     protected $table = 'users';
 
-    public function toDomain()
+    /**
+     * @return Account アカウントドメイン
+     */
+    public function toDomain(): Account
     {
         return new Account(
             new AccountId($this->id),

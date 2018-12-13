@@ -12,8 +12,14 @@ use App\Domains\Account\AccountRepository;
 
 class EloquentAccountRepositoryImpl implements AccountRepository
 {
+    /**
+     * @var EloquentAccount Eloquentアカウントモデル
+     */
     private $eloquentAccount;
 
+    /**
+     * @param EloquentAccount Eloquentアカウントモデル
+     */
     public function __construct(EloquentAccount $eloquentAccount)
     {
         $this->eloquentAccount = $eloquentAccount;

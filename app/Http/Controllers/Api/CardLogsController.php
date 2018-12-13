@@ -10,8 +10,14 @@ use App\Services\CardScraping\EposCard\ScrapeNextMonth;
 
 class CardLogsController extends Controller
 {
+    /**
+     * @var SessionCardLogRepository $sessionCardLogRepo
+     */
     private $sessionCardLogRepo;
 
+    /**
+     * @param SessionCardLogRepository $sessionCardLogRepo
+     */
     public function __construct(SessionCardLogRepository $sessionCardLogRepo)
     {
         $this->sessionCardLogRepo = $sessionCardLogRepo;

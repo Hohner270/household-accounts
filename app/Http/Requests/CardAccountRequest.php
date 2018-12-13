@@ -12,7 +12,7 @@ class CardAccountRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -22,7 +22,7 @@ class CardAccountRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'cardId'              => 'required|integer',
@@ -31,7 +31,10 @@ class CardAccountRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    /**
+     * @return array
+     */
+    public function messages(): array
     {
         return [
             'cardId.required'              => 'カードを選択してください',
@@ -45,10 +48,5 @@ class CardAccountRequest extends FormRequest
             'cardAccountPassword.string'   => '文字列で入力してください',
             'cardAccountPassword.max'      => '255文字以内で入力してください'
         ];
-    }
-
-    public function toDomain()
-    {
-
     }
 }

@@ -10,11 +10,17 @@ use App\Exceptions\NotFoundException;
 
 class RedirectFromAuthenticatePage
 {
-    private $sessionRepo;
+    /**
+     * @var SessionAccountRepository $sessionAccountRepo
+     */
+    private $sessionAccountRepo;
 
-    public function __construct(SessionAccountRepository $sessionRepo)
+    /**
+     * @param SessionAccountRepository $sessionAccountRepo
+     */
+    public function __construct(SessionAccountRepository $sessionAccountRepo)
     {
-        $this->sessionRepo = $sessionRepo;
+        $this->sessionAccountRepo = $sessionAccountRepo;
     }
     
     /**
@@ -27,7 +33,7 @@ class RedirectFromAuthenticatePage
     public function handle($request, Closure $next)
     {
         try {
-            $account = $this->sessionRepo->find();
+            $account = $this->sessionAccountRepo->find();
         } catch (NotFoundException $e) {
             return $next($request);
         }

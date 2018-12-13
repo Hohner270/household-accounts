@@ -7,8 +7,14 @@ use App\Domains\Email\EmailSpec;
 
 class EmailAddress
 {
+    /**
+     * @var string $address
+     */
     private $address;
 
+    /**
+     * @param string $address
+     */
     public function __construct(string $address)
     {
         if (! EmailSpec::canEmailAddress($address)) throw new InitializeException('Invalid value : ' . $address);
@@ -17,6 +23,9 @@ class EmailAddress
         $this->address = $address;
     }
 
+    /**
+     * @return string
+     */
     public function value(): string
     {
         return $this->address;

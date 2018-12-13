@@ -20,8 +20,15 @@ use App\Domains\Card\CardId;
 
 class EloquentCardLog extends Model
 {
+    /**
+     * @var string $table
+     */
     protected $table = 'card_logs';
 
+    /**
+     * @param Collection コレクション
+     * @return CardLogs カードログドメイン（複数）
+     */
     public function toDomains(Collection $records): CardLogs
     {
         return $records->reduce(function ($cardLogs, $record) {
@@ -30,6 +37,9 @@ class EloquentCardLog extends Model
         }, new CardLogs);
     }
 
+    /**
+     * @return CardLog カードログドメイン
+     */
     public function toDomain(): CardLog
     {
         return new CardLog(

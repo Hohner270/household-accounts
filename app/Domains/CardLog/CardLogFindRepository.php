@@ -3,9 +3,13 @@
 namespace App\Domains\CardLog;
 
 use App\Domains\Account\AccountId;
+use App\Domains\CardLog\CardLogs;
 
 interface CardLogFindRepository
 {
-    public function findById();
+    /**
+     * @param AccountId $accountId
+     * @return CardLogs
+     */
     public function findAllThisMonthByAccountId(AccountId $accountId): CardLogs;
 }

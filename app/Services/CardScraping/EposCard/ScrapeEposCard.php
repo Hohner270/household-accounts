@@ -24,8 +24,18 @@ use App\Domains\Card\CardId;
 
 abstract class ScrapeEposCard implements ScrapeCard
 {
+    const COLUMN_KEYS = [
+        'storeName',
+        'usedDate',
+        'usedPlace',
+        'usedContent',
+        'usedPrice',
+        'payment',
+        'paymentTimes',
+    ];
+
     const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_5) AppleWebKit/547.36 (KHTML, like Gecko) Chrome';
-    
+
     const LOGIN_URI = 'https://www.eposcard.co.jp/member/index.html?from=top_header_rp';
     const PAYMENT_URI = 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_preload.do';
     const PAYMENT_DETAIL_URI = 'https://www.eposcard.co.jp/memberservice/pc/paymentamountreference/payment_reference_dispatch.do';
@@ -86,7 +96,7 @@ abstract class ScrapeEposCard implements ScrapeCard
     {
         $cardLogs = new CardLogs;
         foreach ($csvList as $csv) {
-            $csvRecord = array_combine(CardLog::COLUMN_KEYS,  explode(',', $csv));
+            $csvRecord = array_combine(self::COLUMN_KEYS,  explode(',', $csv));
             $csvRecord['usedDate'] = preg_replace('/年|月/', '-', $csvRecord['usedDate']);
             $csvRecord['usedDate'] = preg_replace('/日/', '', $csvRecord['usedDate']);
 

@@ -14,35 +14,71 @@ use App\Domains\CardLog\PaymentTimes;
 
 class CardLog
 {
-    const COLUMN_KEYS = [
-        'storeName',
-        'usedDate',
-        'usedPlace',
-        'usedContent',
-        'usedPrice',
-        'payment',
-        'paymentTimes',
-    ];
-    
+    /**
+     * @var CardLogId $id
+     */
     private $id;
+
+    /**
+     * @var CardId $cardId
+     */
     private $cardId;
+
+    /**
+     * @var StoreName $storeName
+     */
     private $storeName;
+
+    /**
+     * @var UsedDate $usedDate
+     */
     private $usedDate;
+
+    /**
+     * @var UsedPlace $usedPlace
+     */
     private $usedPlace;
+
+    /**
+     * @var UsedContent $usedContent
+     */
     private $usedContent;
+
+    /**
+     * @var UsedPrice $usedPrice
+     */
     private $usedPrice;
+
+    /**
+     * @var Payment $payment
+     */
     private $payment;
+
+    /**
+     * @var PaymentTimes $paymentTimes
+     */
     private $paymentTimes;
 
+    /**
+     * @param CardLogId $id
+     * @param CardId $cardId
+     * @param StoreName $storeName
+     * @param UsedDate $usedDate
+     * @param UsedPlace $usedPlace
+     * @param UsedContent $usedContent
+     * @param UsedPrice $usedPrice
+     * @param Payment $payment
+     * @param PaymentTimes $paymentTime
+     */
     public function __construct(
-        CardLogId $id, 
+        CardLogId $id,
         CardId $cardId,
-        StoreName $storeName, 
-        UsedDate $usedDate, 
-        UsedPlace $usedPlace, 
-        UsedContent $usedContent, 
-        UsedPrice $usedPrice, 
-        Payment $payment, 
+        StoreName $storeName,
+        UsedDate $usedDate,
+        UsedPlace $usedPlace,
+        UsedContent $usedContent,
+        UsedPrice $usedPrice,
+        Payment $payment,
         PaymentTimes $paymentTimes
     ) {
         $this->id = $id;
@@ -56,46 +92,73 @@ class CardLog
         $this->paymentTimes = $paymentTimes;
     }
 
+    /**
+     * @return CardLogId
+     */
     public function id(): CardLogId
     {
         return $this->id;
     }
 
+    /**
+     * @return CardId
+     */
     public function cardId(): CardId
     {
         return $this->cardId;
     }
 
+    /**
+     * @return StoreName
+     */
     public function storeName(): StoreName
     {
         return $this->storeName;
     }
 
+    /**
+     * @return UsedDate
+     */
     public function usedDate(): UsedDate
     {
         return $this->usedDate;
     }
 
+    /**
+     * @return UsedPlace
+     */
     public function usedPlace(): UsedPlace
     {
         return $this->usedPlace;
     }
 
+    /**
+     * @return UsedContent
+     */
     public function usedContent(): UsedContent
     {
         return $this->usedContent;
     }
 
+    /**
+     * @return UsedPrice
+     */
     public function usedPrice(): UsedPrice
     {
         return $this->usedPrice;
     }
 
+    /**
+     * @return Payment
+     */
     public function payment(): Payment
     {
         return $this->payment;
     }
 
+    /**
+     * @return PaymentTimes
+     */
     public function paymentTimes(): PaymentTimes
     {
         return $this->paymentTimes;

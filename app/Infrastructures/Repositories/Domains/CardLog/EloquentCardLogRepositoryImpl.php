@@ -8,13 +8,22 @@ use App\Domains\CardLog\CardLogs;
 
 class EloquentCardLogRepositoryImpl implements CardLogRepository
 {
+    /**
+     * @var EloquentCardLog Eloquentカードログモデル
+     */
     private $eloquent;
 
+    /**
+     * @param EloquentCardLog Eloquentカードログモデル
+     */
     public function __construct(EloquentCardLog $eloquent)
     {
         $this->eloquent = $eloquent;
     }
 
+    /**
+     * @param CardLogs カードログドメイン(複数)
+     */
     public function store(CardLogs $cardLogs)
     {
         $cardLogCollection = $cardLogs->collect();

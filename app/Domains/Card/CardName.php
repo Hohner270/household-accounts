@@ -7,8 +7,14 @@ use App\Domains\Card\CardSpec;
 
 class CardName
 {
+    /**
+     * @var string $cardName
+     */
     private $cardName;
 
+    /**
+     * @param string $cardName
+     */
     public function __construct(string $cardName)
     {
         // if (! CardSpec::canCardName($cardName)) throw new InitializeException('Invalid value: ' . $cardName);
@@ -17,6 +23,9 @@ class CardName
         $this->cardName = $cardName;
     }
 
+    /**
+     * @param string
+     */
     public function value(): string
     {
         return $this->cardName;

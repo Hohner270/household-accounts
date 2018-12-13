@@ -4,22 +4,15 @@ namespace App\Domains\Account;
 
 use Illuminate\Support\Collection;
 
-class Accounts
+use App\Domains\Collections;
+
+class Accounts extends Collections
 {
-    private $accounts;
-
-    public function __construct()
+    /**
+     * @param Account $account
+     */
+    public function add(Account $account)
     {
-        $this->accounts = collect();
-    }
-
-    public function add(Member $member)
-    {
-        $this->accounts->push($member);
-    }
-
-    public function collect(): Collection
-    {
-        return clone $this->accounts;
+        $this->domains->push($account);
     }
 }

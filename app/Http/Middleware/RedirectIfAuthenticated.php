@@ -10,11 +10,17 @@ use App\Exceptions\NotFoundException;
 
 class RedirectIfAuthenticated
 {
-    private $sessionRepo;
+    /**
+     * @var $sessionRepo
+     */
+    private $sessionAccountRepo;
 
-    public function __construct(SessionAccountRepository $sessionRepo)
+    /**
+     * @param SessionAccountRepository $sessionRepo
+     */
+    public function __construct(SessionAccountRepository $sessionAccountRepo)
     {
-        $this->sessionRepo = $sessionRepo;
+        $this->sessionAccountRepo = $sessionAccountRepo;
     }
 
     /**
@@ -27,7 +33,7 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         try {
-            $account = $this->sessionRepo->find();
+            $account = $this->sessionAccountRepo->find();
         } catch (NotFoundException $e) {
             return redirect('/signIn');
         }

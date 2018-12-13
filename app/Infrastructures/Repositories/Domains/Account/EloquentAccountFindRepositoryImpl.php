@@ -10,8 +10,14 @@ use App\Domains\Account\AccountFindRepository;
 
 class EloquentAccountFindRepositoryImpl implements AccountFindRepository
 {
+    /**
+     * @var EloquentAccount Eloquentアカウントモデル
+     */
     private $eloquentAccount;
 
+    /**
+     * @param EloquentAccount Eloquentアカウントモデル
+     */
     public function __construct(EloquentAccount $eloquentAccount)
     {
         $this->eloquentAccount = $eloquentAccount;

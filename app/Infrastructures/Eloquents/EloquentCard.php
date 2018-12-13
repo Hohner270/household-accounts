@@ -12,8 +12,14 @@ use App\Domains\Card\CardName;
 
 class EloquentCard extends Model
 {
+    /**
+     * @var string $table
+     */
     protected $table = 'cards';
 
+    /**
+     * @return Card カードドメイン
+     */
     public function toDomain(): Card
     {
         return new Card(
@@ -22,6 +28,10 @@ class EloquentCard extends Model
         );
     }
 
+    /**
+     * @param Collection コレクション
+     * @return Cards カードドメイン（複数）
+     */
     public function toDomains(Collection $records): Cards
     {
         return $records->reduce(function ($cards, $record) {

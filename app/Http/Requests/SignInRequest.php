@@ -13,7 +13,7 @@ class SignInRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -23,7 +23,7 @@ class SignInRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'email'                 => 'required|exists:users,email|max:255',
@@ -31,7 +31,10 @@ class SignInRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    /**
+     * @return array
+     */
+    public function messages(): array
     {
         return [
             'email.required'                 => 'emailを入力してください',

@@ -11,7 +11,7 @@ class UserCreateRequest extends FormRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }
@@ -21,7 +21,7 @@ class UserCreateRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
             'account_name'          => 'required|unique:users,name|max:255',
@@ -31,7 +31,10 @@ class UserCreateRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    /**
+     * @return array
+     */
+    public function messages(): array
     {
         return [
             'account_name.required'          => 'アカウント名を入力してください',
@@ -46,7 +49,5 @@ class UserCreateRequest extends FormRequest
 
             'account.required'               => 'emailアドレスかパスワードが間違っています',
         ];
-    }
-
-    
+    }   
 }

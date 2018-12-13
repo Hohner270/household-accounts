@@ -10,11 +10,17 @@ use App\Domains\CardAccount\CardAccount;
 
 class CardAccounts extends Collections
 {
+    /**
+     * @param CardAccount $cardAccount
+     */
     public function add(CardAccount $cardAccount)
     {
         $this->domains->push($cardAccount);
     }
 
+    /**
+     * @return CardAccount
+     */
     public function eposCardAccount(): CardAccount
     {
         return $this->domains->filter(function (CardAccount $cardAccount) {

@@ -11,18 +11,23 @@ use App\Domains\Account\AccountId;
 
 class EloquentCardLogFindRepositoryImpl implements CardLogFindRepository
 {
+    /**
+     * @var EloquentCardLog Eloquentカードログモデル
+     */
     private $eloquent;
-    
+
+    /**
+     * @param EloquentCardLog Eloquentカードログモデル
+     */
     public function __construct(EloquentCardLog $eloquent)
     {
         $this->eloquent = $eloquent;
     }
 
-    public function findById()
-    {
-        return;
-    }
-
+    /**
+     * @param AccountId カードID
+     * @return CardLogs カードログドメイン(複数)
+     */
     public function findAllThisMonthByAccountId(AccountId $accountId): CardLogs
     {
         $records = $this->eloquent

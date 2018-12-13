@@ -11,5 +11,12 @@ use App\Domains\CardAccount\EncryptedCardAccountPassword;
 
 interface CardAccountRepository
 {
+    /**
+     * @param CardId $cardId
+     * @param AccountId $accountId
+     * @param EncryptedCardAccountId $encryptedCardAccountId
+     * @param EncryptedCardAccountPassword $encryptedCardAccountPassword
+     * @return CardAccount
+     */
     public function store(CardId $cardId, AccountId $accountId, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword): CardAccount;
 }

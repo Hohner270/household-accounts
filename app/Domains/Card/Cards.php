@@ -7,6 +7,9 @@ use App\Domains\Card\Card;
 
 class Cards extends Collections
 {
+    /**
+     * @param Card $card
+     */
     public function add(Card $card)
     {
         $this->domains->push($card);

@@ -14,8 +14,14 @@ use App\Domains\CardAccount\EncryptedCardAccountPassword;
 
 class EloquentCardAccount extends Model
 {
+    /**
+     * @var string $table
+     */
     protected $table = 'user_cards';
 
+    /**
+     * @return CardAccount カードアカウントドメイン
+     */
     public function toDomain(): CardAccount
     {
         return new CardAccount(
@@ -25,6 +31,10 @@ class EloquentCardAccount extends Model
         );
     }
 
+    /**
+     * @param Collection コレクション
+     * @return CardAccounts カードアカウントドメイン(複数)
+     */
     public function toDomains(Collection $records): CardAccounts
     {
         return $records->reduce(function ($cardAccounts, $record) {

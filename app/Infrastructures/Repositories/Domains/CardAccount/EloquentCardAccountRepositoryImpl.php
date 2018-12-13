@@ -15,13 +15,25 @@ use App\Infrastructures\Eloquents\EloquentCardAccount;
 
 class EloquentCardAccountRepositoryImpl implements CardAccountRepository
 {
+    /**
+     * @var EloquentCardAccount Eloquentカードアカウントモデル
+     */
     private $eloquent;
 
+    /**
+     * @param EloquentCardAccount Eloquentカードアカウントモデル
+     */
     public function __construct(EloquentCardAccount $eloquent)
     {
         $this->eloquent = $eloquent;
     }
 
+    /**
+     * @param CardId カードID
+     * @param AccountId アカウントID
+     * @param EncryptedCardAccountId 暗号化カードID 
+     * @param EncryptedCardAccountPassword 暗号化アカウントパスワード
+     */
     public function store(CardId $cardId, AccountId $accountId, EncryptedCardAccountId $encryptedCardAccountId, EncryptedCardAccountPassword $encryptedCardAccountPassword): CardAccount
     {
         $this->eloquent->user_id = $accountId->value();

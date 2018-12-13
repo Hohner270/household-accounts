@@ -4,8 +4,14 @@ namespace App\Domains;
 
 abstract class Identifier
 {
+    /**
+     * @var int NOT_EXIST_ID 
+     */
     const NOT_EXIST_ID = 0;
 
+    /**
+     * @var int $id 
+     */
     protected $id;
 
     /**

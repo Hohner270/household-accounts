@@ -11,14 +11,27 @@ use App\Exceptions\NotFoundException;
 
 class HttpSessionAccountRepositoryImpl implements SessionAccountRepository
 {
+    /**
+     * @var string セッションキー
+     */
     const SESSION_KEY = 'account';
+
+    /**
+     * @var Store SessionClient
+     */
     private $session;
 
+    /**
+     * @param Store SessionClient
+     */
     public function __construct(Store $session)
     {
         $this->session = $session;
     }
 
+    /**
+     * @return Account アカウントドメイン
+     */
     public function find(): Account
     {
         $account = $this->session->get(self::SESSION_KEY);
@@ -29,7 +42,10 @@ class HttpSessionAccountRepositoryImpl implements SessionAccountRepository
         return $account;
     }
 
-    public function store(Account $account)
+    /**
+     * @return void
+     */
+    public function store(Account $account): void
     {
         $this->session->put(self::SESSION_KEY, $account);
     }

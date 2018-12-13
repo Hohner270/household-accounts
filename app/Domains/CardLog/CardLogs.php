@@ -7,11 +7,17 @@ use Illuminate\Support\Collection;
 
 class CardLogs extends Collections
 {
+    /**
+     * @param CardLog $cardLog
+     */
     public function add(CardLog $cardLog)
     {
         $this->domains->push($cardLog);
     }
 
+    /**
+     * @return int
+     */
     public function total(): int
     {
         $price = 0;
@@ -22,7 +28,10 @@ class CardLogs extends Collections
         return $price;
     }
 
-    public function toJson()
+    /**
+     * @return string
+     */
+    public function toJson(): string
     {
         $cardLogList = [];
         foreach ($this->domains as $cardLog) {

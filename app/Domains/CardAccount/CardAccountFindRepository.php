@@ -8,5 +8,9 @@ use App\Domains\CardAccount\CardAccounts;
 
 interface CardAccountFindRepository
 {
+    /**
+     * @param AccountId $accountId
+     * @return CardAccounts
+     */
     public function findByAccountId(AccountId $accountId): CardAccounts;
 }
